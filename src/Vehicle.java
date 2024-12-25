@@ -1,3 +1,8 @@
+import annotations.MaxValue;
+import annotations.MinValue;
+import annotations.NotNull;
+import annotations.StringLength;
+
 /**
  * The Vehicle class represents a vehicle with a brand and year.
  * It validates its fields without using reflection.
@@ -5,30 +10,33 @@
 
 public class Vehicle {
 
-  String brand;
-  int year;
+  @NotNull
+  @StringLength(min = 3, max = 80)
+  private String brand;
+
+  @MinValue(1900)
+  @MaxValue(2022)
+  private int year;
 
   public Vehicle(String brand, int year) {
     this.brand = brand;
     this.year = year;
   }
 
-  /**
-   * Validates the fields of the Vehicle instance based on the constraints.
-   *
-   * @throws IllegalArgumentException if any validation constraint is violated
-   */
+  public String getBrand() {
+    return brand;
+  }
 
-  public void customValidate() {
-    if (brand == null) {
-      throw new IllegalArgumentException("Field 'brand' cannot be null.");
-    }
-    if (brand.length() < 3 || brand.length() > 30) {
-      throw new IllegalArgumentException("Field 'brand' must have length between 3 and 30.");
-    }
-    if (year < 1900 || year > 2022) {
-      throw new IllegalArgumentException("Field 'year' must be between 1900 and 2022.");
-    }
+  public void setBrand(String brand) {
+    this.brand = brand;
+  }
+
+  public int getYear() {
+    return year;
+  }
+
+  public void setYear(int year) {
+    this.year = year;
   }
 }
 
